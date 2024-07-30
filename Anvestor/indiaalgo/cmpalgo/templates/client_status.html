@@ -1,0 +1,172 @@
+{% extends 'client_base.html' %}
+
+{% block main %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #000; /* Background color black */
+        margin: 0;
+        padding: 0;
+        color: #fff; /* Text color white */
+    }
+    .container {
+        width: 90%;
+        margin: auto;
+        background-color: #000; /* Container background color black */
+        padding: 20px;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.7); /* Gold shadow */
+        border-radius: 8px;
+        margin-top: 50px;
+        animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    header {
+        background-color: #000; /* Header background color black */
+        padding: 10px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    header h1 {
+        margin: 0;
+        color: #ffc107; /* Header text color gold */
+    }
+    .search-bar {
+        margin: 20px 0;
+    }
+    .search-bar input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #FFD700; /* Border color gold */
+        box-shadow: 0 2px 5px rgba(255, 215, 0, 0.5); /* Gold shadow */
+        background-color: #222; /* Input background color dark gray */
+        color: #FFD700; /* Input text color gold */
+    }
+    .table-container {
+        overflow-x: auto; /* Enable horizontal scrolling */
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #000; /* Table background color black */
+        color: #ffffff; /* Table text color white */
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Gold shadow */
+        min-width: 800px; /* Minimum width to enable scrolling */
+    }
+    thead {
+        background-color: #000; /* Header background color black */
+        color: #FFD700; /* Header text color gold */
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #FFD700; /* Border color gold */
+    }
+    tr:nth-child(even) {
+        background-color: #222; /* Even row background color dark gray */
+    }
+    .pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        color: #FFD700; /* Pagination text color gold */
+    }
+    .pagination select, .pagination button {
+        padding: 5px 10px;
+        margin: 0 5px;
+        background-color: #000; /* Button background color black */
+        color: #FFD700; /* Button text color gold */
+        border: 1px solid #FFD700; /* Border color gold */
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .pagination button:hover, .pagination select:hover {
+        background-color: #FFD700; /* Background color on hover */
+        color: #000; /* Text color on hover */
+        box-shadow: 0 4px 8px rgba(255, 215, 0, 0.7); /* Gold shadow on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .container {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .pagination {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .pagination span, .pagination select, .pagination button {
+            margin: 5px 0;
+        }
+    }
+</style>
+<div class="container">
+    <header>
+        <h1>Trading Status</h1>
+    </header>
+    <div class="search-bar">
+        <input type="text" placeholder="Filter Table">
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Time</th>
+                    <th>Service Name</th>
+                    <th>Quantity</th>
+                    <th>Strategy</th>
+                    <th>Trading</th>
+                    <th>IP Address</th>
+                    <th>Product Type</th>
+                    <th>Updated By</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ client.clint_name_first }}</td>
+                    <td>{{ client.login_date_time }}</td>
+                    <td>{{ client.client_Group }}</td>
+                    <td>{{ client_symbol_qty.QUANTITY }}</td>
+                    <td>{{ client.strategies }}</td>
+                    {% if client.clint_plane == 'Live' %}
+                        <td style="color: green;">API ON</td>
+                    {% else %}
+                        <td style="color: red;">API OFF</td>
+                    {% endif %}
+                    <td>{{ client.ip_address }}</td>
+                    <td>{{ product_types.Product_Type }}</td>
+                    <td>{{ client_symbol_qty.Product_Type }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <span>Rows per page: </span>
+        <select>
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+        </select>
+        <span>1-1 of 1</span>
+        <button>&lt;</button>
+        <button>&gt;</button>
+    </div>
+</div>
+{% endblock %}
